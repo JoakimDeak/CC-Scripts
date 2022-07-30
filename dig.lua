@@ -2,7 +2,7 @@ local turtle = require("turtle")
 
 function Forward(times)
     for _ = 1, times, 1 do
-        turtle.forward()
+        ForwardSafe()
     end
 end
 
@@ -124,6 +124,9 @@ end
 function FixFloor()
 end
 function ForwardSafe()
+    while turtle.detect() do
+        turtle.dig()
+    end
     turtle.forward();
     local floorIsSolid = turtle.detectDown();
     if not floorIsSolid then

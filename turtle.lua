@@ -5,6 +5,10 @@ end
 function turtle.digUp()
     print("digUp");
 end
+function turtle.detect()
+    print('detect')
+    return math.random() > 0.5
+end
 function turtle.detectDown()
     print("detectDown");
     local num = math.random() - 0.5;
