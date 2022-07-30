@@ -7,7 +7,7 @@ function Refuel(requiredCoal)
         if item then
             if item.name == "minecraft:coal" then
                 turtle.select(slot)
-                if item.count > requiredCoal - usedCoal then
+                if item.count >= requiredCoal - usedCoal then
                     turtle.refuel(requiredCoal - usedCoal)
                     return
                 else
