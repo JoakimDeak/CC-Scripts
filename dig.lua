@@ -1,5 +1,58 @@
 local turtle = require("turtle")
 
+function Forward(times)
+    for _ = 1, times, 1 do
+        turtle.forward()
+    end
+end
+
+function HasEmptySlot()
+    for slot = 1, 16, 1 do
+        local item = turtle.getItemDetail(slot)
+        if not item then
+            return true
+        end
+    end
+    return false
+end
+
+function Unload(j, i, depth, width)
+    if j % 2 == 0 then
+        turtle.turnRight()
+    else
+        turtle.turnLeft()
+    end
+    Forward(j)
+    turtle.turnLeft()
+    local currentDepth
+    if j % 2 == 0 then
+        currentDepth = depth - i
+    else
+        currentDepth = i
+    end
+    currentDepth = currentDepth + 1
+    Forward(currentDepth)
+    EmptyInventory()
+    turtle.turnLeft()
+    turtle.turnLeft()
+    Forward(currentDepth)
+    turtle.turnRight()
+    Forward(j - 1)
+    if j % 2 == 0 then
+        turtle.turnRight()
+    else
+        turtle.turnLeft()
+    end
+end
+
+function EmptyInventory()
+    for slot = 1, 16, 1 do
+        turtle.select(slot)
+        turtle.drop()
+    end
+    turtle.select(1)
+end
+
 function Refuel(requiredCoal)
     local usedCoal = 0
     for slot = 1, 16, 1 do
@@ -95,9 +148,7 @@ function Return(depth, width, turnDirection)
     else
         turtle.turnLeft();
     end
-    for _ = 1, width - 1, 1 do
-        turtle.forward();
-    end
+    Forward(width - 1)
     turtle.turnLeft();
     local movesRequired;
     if turnDirection == 1 then
@@ -105,9 +156,8 @@ function Return(depth, width, turnDirection)
     else
         movesRequired = 1;
     end
-    for _ = 1, movesRequired, 1 do
-        turtle.forward();
-    end
+    Forward(movesRequired)
+    EmptyInventory()
     turtle.turnRight();
     turtle.turnRight();
 end
@@ -119,10 +169,13 @@ function Excavate(depth, width)
         if j > 1 then
             actualDepth = depth - 1;
         end
-        for _ = 1, actualDepth, 1 do
+        for i = 1, actualDepth, 1 do
             turtle.dig();
             ForwardSafe();
             turtle.digUp();
+            if not HasEmptySlot() then
+                Unload(j, i, actualDepth, width)
+            end
         end
         if j == tonumber(width) then
             break

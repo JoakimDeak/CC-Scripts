@@ -41,8 +41,10 @@ end
 function turtle.select(slot)
     print('select slot ' .. slot)
 end
+function turtle.drop()
+    print('dropping item')
+end
 function turtle.forward()
-    turtle.moveCount = turtle.moveCount + 1;
     print("forward");
 end
 function turtle.turnLeft()
