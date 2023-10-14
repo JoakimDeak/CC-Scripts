@@ -35,6 +35,10 @@ function turtle.getItemDetail(slot)
         return nil
     end
 end
+function turtle.getItemCount(slot)
+    print('get item count at slot' .. slot)
+    return 64
+end
 function turtle.getFuelLevel()
     print('fuel level is 80')
     return 80
@@ -48,6 +52,12 @@ end
 function turtle.drop()
     print('dropping item')
 end
+function turtle.dropUp()
+    print('drop item up')
+end
+function turtle.dropDown()
+    print("drop item down")
+end
 function turtle.forward()
     print("forward");
 end
@@ -56,6 +66,9 @@ function turtle.turnLeft()
 end
 function turtle.turnRight()
     print("turnRight");
+end
+function turtle.suck(count)
+    print('suck' .. count)
 end
 
 return turtle
