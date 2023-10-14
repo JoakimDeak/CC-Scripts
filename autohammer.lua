@@ -86,7 +86,11 @@ function ProcessOutput()
     end
 end
 
-GiveCobble()
+turtle.select(1)
+turtle.suck(STACK)
+if not turtle.getItemDetail(1) then
+    GiveCobble()
+end
 while true do
     ProcessOutput()
 end
