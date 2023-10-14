@@ -7,8 +7,29 @@ local turtle = require("turtle")
 
 local STACK = 64
 
-local gravelCount = 0
-local sandCount = 0
+function GetSandCount()
+    local file = fs.open("sandCount", "r")
+    local count = tonumber(file.read())
+    file.close()
+    return count
+end
+function SetSandCount(count)
+    local file = fs.open("sandCount", "w")
+    file.write(count)
+    file.close()
+end
+
+function GetGravelCount()
+    local file = fs.open("gravelCount", "r")
+    local count = tonumber(file.read())
+    file.close()
+    return count
+end
+function SetGravelCount(count)
+    local file = fs.open("gravelCount", "w")
+    file.write(count)
+    file.close()
+end
 
 function RefillCobble()
     turtle.turnRight()
@@ -64,17 +85,19 @@ function ProcessOutput()
     end
 
     if hammerOutput.name == "minecraft:gravel" then
-        gravelCount = gravelCount + 1
-        if gravelCount % 3 == 0 then
-            gravelCount = 0
+        local gravelCount = GetGravelCount()
+        SetGravelCount(gravelCount + 1)
+        if (gravelCount + 1) % 3 == 0 then
+            SetGravelCount(0)
             OutputToSieve()
         else
             OutputToHammer()
         end
     elseif hammerOutput.name == "minecraft:sand" then
-        sandCount = sandCount + 1
-        if sandCount % 2 == 0 then
-            sandCount = 0
+        local sandCount = GetSandCount()
+        SetSandCount(sandCount + 1)
+        if (sandCount + 1) % 2 == 0 then
+            SetSandCount(0)
             OutputToSieve()
         else
             OutputToHammer()
