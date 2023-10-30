@@ -29,6 +29,8 @@ function Main()
 
     if item and item.name == "minecraft:water_bucket" then
         MakeYeast()
+    else
+        os.pullEvent("turtle_inventory");
     end
 end
 
