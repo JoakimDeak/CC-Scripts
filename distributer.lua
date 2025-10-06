@@ -6,7 +6,7 @@ local function getError()
     if not file then
         return ratioA + ratioB
     end
-    local error = tonumber(file.read())
+    local error = tonumber(file.readAll())
     file.close()
     return error
 end
@@ -33,7 +33,7 @@ local function main()
     else
         local error = getError()
         error = error + ratioA
-        if error >= ratioA + ratioB then
+        if error >= (ratioA + ratioB) then
             turtle.dropUp(1)
             error = error - (ratioA + ratioB)
         else
